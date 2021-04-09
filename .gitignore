@@ -1,0 +1,8 @@
+# Ignore everything inside .config
+.config/*
+
+# except the following
+!.config/fish/
+!.config/i3/
+!.config/kitty/
+!.config/fontconfig/
