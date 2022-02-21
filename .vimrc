@@ -117,7 +117,7 @@ endif
 " GUI (which always has colors).
 if &t_Co > 2 || has("gui_running")
   " Revert with ":syntax off".
-  "syntax on
+  syntax on
 
   " I like highlighting strings inside C comments.
   " Revert with ":unlet c_comment_strings".
@@ -141,6 +141,7 @@ if has('langmap') && exists('+langremap')
 endif
 
 " Define colorscheme
-syntax enable
 set background=light
-"colorscheme solarized
+
+" disable braces inside brackets error
+let c_no_curly_error=1

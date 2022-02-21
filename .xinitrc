@@ -34,11 +34,19 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
  unset f
 fi
 
+# start gnome-keyring daemon (for minecraft launcher)
+eval $(gnome-keyring-daemon --start)
+export SSH_AUTH_SOCK
+
 # disable screen blanking
 xset s off
 xset -dpms
 xset s noblank
 # set background
-~/.fehbg
+~/.config/fehbg/.fehbg
+# set touchpad preferences
+xinput set-prop "Elan Touchpad" "libinput Tapping Enabled" 1
+xinput set-prop "Elan Touchpad" "libinput Disable While Typing Enabled" 0
+xinput set-prop "Elan TrackPoint" "libinput Accel Speed" -0.5
 # start i3
 exec i3

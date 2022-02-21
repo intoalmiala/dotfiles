@@ -2,7 +2,7 @@
 
 set $mod Mod4
 
-font pango:Fira Code 11
+font pango:monospace Medium 11
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
@@ -10,21 +10,21 @@ font pango:Fira Code 11
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
-#exec --no-startup-id nm-applet
+exec --no-startup-id nm-applet
 
 # Bind screenshot keys
-bindsym Print exec --no-startup-id maim -s | xclip -selection clipboard -t image/png
+bindsym Print exec --no-startup-id maim -su | xclip -selection clipboard -t image/png
 bindsym Shift+Print exec --no-startup-id maim | xclip -selection clipboard -t image/png
 bindsym $mod+Print exec --no-startup-id maim -i $(xdotool getactivewindow) | xclip -selection clipboard -t image/png
-bindsym Ctrl+Print exec --no-startup-id maim -s /home/intoo/Pictures/screenshot_$(date +%Y-%m-%dT%H:%M:%S).png
+bindsym Ctrl+Print exec --no-startup-id maim -su /home/intoo/Pictures/screenshot_$(date +%Y-%m-%dT%H:%M:%S).png
 bindsym Ctrl+Shift+Print exec --no-startup-id maim /home/intoo/Pictures/screenshot_$(date +%Y-%m-%dT%H:%M:%S).png
 bindsym Ctrl+$mod+Print exec --no-startup-id maim -i $(xdotool getactivewindow) /home/intoo/Pictures/screenshot_$(date +%Y-%m-%dT%H:%M:%S).png
 
 
 # Use pactl to adjust volume in PulseAudio.
 #set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10%
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10%
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
@@ -35,8 +35,8 @@ bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 bindsym XF86AudioStop exec --no-startup-id playerctl stop
 
 # Configure backlight control
-bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl -e set 10%+
-bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl -e set 10%-
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl -e set 5%+
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl -e set 5%-
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -176,25 +176,41 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
-bar {
-        status_command i3status
-}
+# Launch polybar
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+
+# i3bar
+#bar {
+#	status_command i3status
+#	bindsym button4 nop
+#	bindsym button5 nop
+#	tray_padding 0
+#
+#	colors {
+#		background		#3c3836
+#		statusline		#fbf1c7
+#		separator		#d5c4a1
+#
+#		focused_workspace	#504945 #504945 #f9f5d7
+#		active_workspace	#665c54 #665c54 #d5c4a1
+#		inactive_workspace	#3c3836 #3c3836 #fbf1c7
+#		urgent_workspace	#9d0006 #9d0006 #fbf1c7
+#		binding_mode		#9d0006 #9d0006 #fbf1c7
+#	}
+#}
 
 # Border style
 smart_borders on
-for_window [class=".*"] border pixel 1
+for_window [class=".*"] border pixel 2
 
 # Colors
-client.focused		#d79921	#d79921	#d79921	#d79921	#d79921
-client.unfocused	#2c2826	#2c2826	#2c2826	#2c2826	#2c2826
+client.focused		#458588	#458588	#458588	#458588	#458588
+client.focused_inactive	#ebdbb2	#ebdbb2	#ebdbb2	#ebdbb2	#ebdbb2
+client.unfocused	#ebdbb2	#ebdbb2	#ebdbb2	#ebdbb2	#ebdbb2
 client.urgent		#cc241d	#cc241d	#cc241d	#cc241d	#cc241d
-client.background	#fbf1c7	#fbf1c7	#fbf1c7	#fbf1c7	#fbf1c7
+client.background	#fbf1c7
 
 # Gaps
 smart_gaps on
-gaps inner 20
+gaps inner 18
 
-# Configure displays
-exec --no-startup-id xrandr --output HDMI2 --auto --primary --right-of eDP1
